@@ -33,7 +33,7 @@ function onLoanFormSubmit(e) {
     interestInput.value === '' ||
     yearsInput.value === ''
   ) {
-    alert('Please fill in all fields!');
+    showError('Please fill in all fields!');
     return;
   }
 
@@ -56,7 +56,7 @@ function calculateResults(principal, monthlyInterest, numberOfPayments) {
   // console.log(monthly, total, interest);
 
   if (isNaN(monthly)) {
-    alert('Please check your numbers');
+    showError('Please check your numbers');
     return;
   } else {
     addResultsToDOM(monthly, total, interest);
@@ -86,6 +86,15 @@ function resetUI() {
   monthlyResult.innerText = '';
   paymentResult.innerText = '';
   interestResult.innerText = '';
+}
+
+function showError(msg) {
+  errMsg.style.transform = 'translateY(-450px) translateX(-50%)';
+  errMsg.innerText = msg;
+
+  setTimeout(() => {
+    errMsg.style.transform = 'translateY(-1000px) translateX(-50%)';
+  }, 3000);
 }
 
 loanForm.addEventListener('submit', onLoanFormSubmit);
