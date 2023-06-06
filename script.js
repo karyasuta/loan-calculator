@@ -11,6 +11,8 @@ const loanForm = document.getElementById('loan-form'),
 function onLoanFormSubmit(e) {
   e.preventDefault();
 
+  resetUI();
+
   // Validate input
   if (
     amountInput.value === '' ||
@@ -57,8 +59,33 @@ function calculateResults(principal, monthlyInterest, numberOfPayments) {
     alert('Please check your numbers');
     return;
   } else {
-    console.log('Success');
+    addResultsToDOM(monthly, total, interest);
   }
+}
+
+function addResultsToDOM(monthly, total, interest) {
+  monthlyResult.innerText = '$' + monthly;
+  paymentResult.innerText = '$' + total;
+  interestResult.innerText = '$' + interest;
+
+  showSpinnerAndResults(1);
+}
+
+function showSpinnerAndResults(seconds) {
+  const spinner = document.getElementById('spinner');
+  spinner.style.display = 'block';
+
+  setTimeout(() => {
+    spinner.style.display = 'none';
+    loanResults.style.display = 'block';
+  }, seconds * 1000);
+}
+
+function resetUI() {
+  loanResults.style.display = 'none';
+  monthlyResult.innerText = '';
+  paymentResult.innerText = '';
+  interestResult.innerText = '';
 }
 
 loanForm.addEventListener('submit', onLoanFormSubmit);
