@@ -39,7 +39,26 @@ function onLoanFormSubmit(e) {
   const monthlyInterest = parseFloat(interestInput.value) / 100 / 12;
   const numberOfPayments = parseFloat(yearsInput.value) * 12;
 
-  console.log(principal, monthlyInterest, numberOfPayments);
+  calculateResults(principal, monthlyInterest, numberOfPayments);
+}
+
+function calculateResults(principal, monthlyInterest, numberOfPayments) {
+  const x = Math.pow(1 + monthlyInterest, numberOfPayments);
+  // Get monthly payment
+  const monthly = ((principal * x * monthlyInterest) / (x - 1)).toFixed(2);
+  // Get total payment
+  const total = (monthly * numberOfPayments).toFixed(2);
+  // Get total interest
+  const interest = (monthly * numberOfPayments - principal).toFixed(2);
+
+  // console.log(monthly, total, interest);
+
+  if (isNaN(monthly)) {
+    alert('Please check your numbers');
+    return;
+  } else {
+    console.log('Success');
+  }
 }
 
 loanForm.addEventListener('submit', onLoanFormSubmit);
